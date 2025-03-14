@@ -1,13 +1,13 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CardComponent } from '../../shared/components/card/card.component';
 import { TextConstants } from '../../utils/constants/TitleConstants';
-import { Dropdown } from 'bootstrap';
 import { Tarea } from '../../interfaces/tareas.interface';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
-  imports: [CardComponent, CommonModule],
+  imports: [CardComponent, CommonModule, ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -20,10 +20,25 @@ export class HomeComponent implements OnInit{
 
   public listaTareas: Tarea[] = [];
   public listaTareasOriginal: Tarea[] = [];
+  public formFilter!: FormGroup;
 
   ngOnInit(): void {
     this.getTasks();
+    this.initializateFormFilter();
   }
+
+  constructor(private readonly formBuilder: FormBuilder){}
+
+  /**
+   * Metodo para inicializar el form para el filtro
+   * @author david julian martinez
+   */
+  private initializateFormFilter(){
+    this.formFilter = this.formBuilder.group({
+      filtro: ['',]
+    });
+  }
+
   /**
    * Metodo para obtener todas las tareas
    * @author david julian martinez
@@ -55,19 +70,19 @@ export class HomeComponent implements OnInit{
         estado: 1
       },
       {
-        idTarea: 3,
+        idTarea: 4,
         titulo: 'Prueba 4',
         descripcion: 'Prueba 2',
         estado: 1
       },
       {
-        idTarea: 3,
+        idTarea: 5,
         titulo: 'Prueba 4',
         descripcion: 'Prueba 2',
         estado: 1
       },
       {
-        idTarea: 3,
+        idTarea: 6,
         titulo: 'Prueba 4',
         descripcion: 'Prueba 2',
         estado: 1
@@ -75,6 +90,14 @@ export class HomeComponent implements OnInit{
     ];
 
     this.listaTareasOriginal = this.listaTareas;
+  }
+
+  /**
+   * Metodo para filtrar las tareas segun la información deñ filtro
+   */
+  public filterTask(){
+    const controlFilter = this.formFilter.get('filtro');
+    this.listaTareas = this.listaTareasOriginal.filter(task => task.titulo.toLowerCase() == controlFilter?.value.toLowerCase());
   }
 
   /**
@@ -91,6 +114,26 @@ export class HomeComponent implements OnInit{
    */
   public getCompleteTask(){
     this.listaTareas = this.listaTareasOriginal.filter(task => task.estado == 2);
+  }
+
+  /**
+   * Metodo para eliminar un dato de la lista
+   * @author david julian martinez
+   * @param event number
+   */
+  public deleteTask(event: number){
+    this.listaTareas = this.listaTareas.filter(task => task.idTarea !== event);
+    this.listaTareasOriginal = this.listaTareasOriginal.filter(task => task.idTarea !== event);
+  }
+  /**
+   * Metodo para cambiar el estado de una tarea
+   * @param event
+   */
+  public changeState(event: number){
+    const tareaEncontrada = this.listaTareasOriginal.find(tarea => tarea.idTarea === event);
+    if (tareaEncontrada) {
+      tareaEncontrada.estado = 2;
+    }
   }
 
   /**

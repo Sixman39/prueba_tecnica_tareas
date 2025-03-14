@@ -1,18 +1,42 @@
-<div class="card card-size p-3">
-  <div class="h-100 d-flex flex-column">
-    <div class="row justify-content-between align-items-center">
-      <h5 class="card-title col-5">{{titulo}}</h5>
-      <div class="btn-group btn-group-sm col-5" role="group">
-        <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Completar tarea"><i class="bi bi-check-lg"></i></button>
-        <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar tarea"><i class="bi bi-pen"></i></button>
-        <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Eliminar Tarea"><i class="bi bi-trash3"></i></button>
+<div *ngIf="!create">
+  <div class="card card-size p-3">
+    <div class="h-100 d-flex flex-column">
+      <div class="row justify-content-between align-items-center">
+        <h5 class="card-title col-5">{{tarea?.titulo}}</h5>
+        <div class="btn-group btn-group-sm col-5" role="group">
+          <button *ngIf="tarea?.estado == 1" type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Completar tarea" (click)="changeState()"><i class="bi bi-check-lg"></i></button>
+          <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Eliminar Tarea" (click)="deleteTask()"><i class="bi bi-trash3"></i></button>
+        </div>
+      </div>
+      <div class="row flex-grow-1 mt-4 d-flex align-items-center">
+        <p class="card-text col">{{tarea?.descripcion}}</p>
+      </div>
+      <div class="row mt-4">
+      <span class="badge rounded-pill col-4 ms-2" [ngClass]="{'text-bg-secondary': tarea?.estado == 1,'text-bg-success': tarea?.estado == 2, }">{{tarea?.estado == 1 ? TITULO_PENDIENTE : TITULO_COMPLETADO}}</span>
       </div>
     </div>
-    <div class="row flex-grow-1 mt-4 d-flex align-items-center">
-      <p class="card-text col">{{descripcion}}</p>
+  </div>
+</div>
+<div *ngIf="create">
+  <div class="card card-size p-3">
+    <div class="h-100 d-flex flex-column align-items-center justify-content-center" *ngIf="!editarTarea">
+      <button type="button" class="btn btn-outline-secondary" (click)="editarTarea = true">Agregar tarea</button>
     </div>
-    <div class="row mt-4">
-    <span class="badge rounded-pill col-4 ms-2" [ngClass]="{'text-bg-secondary': estado == 1,'text-bg-success': estado == 2, }">{{estado == 1 ? TITULO_PENDIENTE : TITULO_COMPLETADO}}</span>
+    <div class="h-100 d-flex flex-column" *ngIf="editarTarea">
+      <div class="row justify-content-end">
+        <div class="btn-group btn-group-sm col-5" role="group">
+          <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Guardar tarea" (click)="changeState()"><i class="bi bi-check-lg"></i></button>
+          <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cancelar" (click)="editarTarea = false"><i class="bi bi-x-lg"></i></button>
+        </div>
+      </div>
+      <form>
+        <div class="row mt-4">
+          <input class="col" formControlName="filtro" type="text" class="form-control" placeholder="Titulo">
+        </div>
+        <div class="row flex-grow-1 mt-4">
+          <textarea class="form-control" rows="2" placeholder="Descripción"></textarea>
+        </div>
+      </form>
     </div>
   </div>
 </div>
