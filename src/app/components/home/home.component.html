@@ -1,13 +1,8 @@
 <section class="mt-5 mb-3 mx-5">
   <div class="card py-3">
     <div class="d-flex justify-content-between align-items-center mx-3">
-      <form [formGroup]="formFilter" class="col-6">
+      <form [formGroup]="formFilter" class="col-5">
         <div class="input-group">
-          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-grid me-1"></i>{{TITULO_GALERIA}}</button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#"><i class="bi bi-grid me-1"></i>{{TITULO_GALERIA}}</a></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-layout-split me-1"></i>{{TITULO_TABLERO}}</a></li>
-          </ul>
           <input formControlName="filtro" type="text" class="form-control" placeholder="Buscar tareas por titulo">
           <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="filterTask()"><i class="bi bi-search me-1"></i></button>
         </div>
@@ -42,7 +37,7 @@
         <app-card [tarea]="task" (eliminado)="deleteTask($event)" (completado)="changeState($event)"></app-card>
       </div>
       <div class="col mb-3">
-        <app-card [create]="true"></app-card>
+        <app-card [create]="true" [tamaño]="listaTareasOriginal.length" (nuevaTarea)="createTask($event)"></app-card>
       </div>
     </div>
   </div>

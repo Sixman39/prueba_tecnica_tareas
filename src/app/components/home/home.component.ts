@@ -13,14 +13,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class HomeComponent implements OnInit{
 
-
-  readonly TITULO_GALERIA = TextConstants.TITULO_GALERIA;
-  readonly TITULO_TABLERO = TextConstants.TITULO_TABLERO;
   readonly TITULO_TAREAS = TextConstants.TITULO_TAREAS;
 
   public listaTareas: Tarea[] = [];
   public listaTareasOriginal: Tarea[] = [];
   public formFilter!: FormGroup;
+  private stateFilter: number = 0;
 
   ngOnInit(): void {
     this.getTasks();
@@ -98,6 +96,7 @@ export class HomeComponent implements OnInit{
   public filterTask(){
     const controlFilter = this.formFilter.get('filtro');
     this.listaTareas = this.listaTareasOriginal.filter(task => task.titulo.toLowerCase() == controlFilter?.value.toLowerCase());
+    this.stateFilter = 3;
   }
 
   /**
@@ -106,6 +105,7 @@ export class HomeComponent implements OnInit{
    */
   public getPendingTask(){
     this.listaTareas = this.listaTareasOriginal.filter(task => task.estado == 1);
+    this.stateFilter = 1;
   }
 
   /**
@@ -114,6 +114,7 @@ export class HomeComponent implements OnInit{
    */
   public getCompleteTask(){
     this.listaTareas = this.listaTareasOriginal.filter(task => task.estado == 2);
+    this.stateFilter = 2;
   }
 
   /**
@@ -122,18 +123,19 @@ export class HomeComponent implements OnInit{
    * @param event number
    */
   public deleteTask(event: number){
-    this.listaTareas = this.listaTareas.filter(task => task.idTarea !== event);
     this.listaTareasOriginal = this.listaTareasOriginal.filter(task => task.idTarea !== event);
+    this.changeStateFilter();
   }
   /**
    * Metodo para cambiar el estado de una tarea
-   * @param event
+   * @param event number
    */
   public changeState(event: number){
     const tareaEncontrada = this.listaTareasOriginal.find(tarea => tarea.idTarea === event);
     if (tareaEncontrada) {
       tareaEncontrada.estado = 2;
     }
+
   }
 
   /**
@@ -142,7 +144,42 @@ export class HomeComponent implements OnInit{
    */
   public getAllTask(){
     this.listaTareas = this.listaTareasOriginal;
+    this.stateFilter = 0;
   }
+
+  /**
+   * Metodo que recibe la notificacion de tarea y la agrega a la lista nueva
+   * @param event Tarea
+   */
+  public createTask(event: Tarea){
+    this.listaTareasOriginal.push(event);
+    this.changeStateFilter();
+  }
+
+
+  /**
+   * Metodo que vuelve a filtrar cuando se cree una tarea o se elimina
+   * @author david julian martinez
+   */
+  private changeStateFilter(){
+    switch (this.stateFilter) {
+      case 0:
+        this.getAllTask()
+        break;
+      case 1:
+        this.getPendingTask();
+        break;
+      case 2:
+        this.getCompleteTask();
+        break;
+      case 3:
+        this.filterTask();
+        break;
+      default:
+        break;
+    }
+  }
+
 
   /**
    * getter para obtener la lista de todas las tareas pendientes
@@ -162,5 +199,6 @@ export class HomeComponent implements OnInit{
     var countTasks = tasks.reduce((count, tarea) => tarea.estado === 2 ? count + 1 : count, 0);
     return countTasks;
   }
+
 
 }

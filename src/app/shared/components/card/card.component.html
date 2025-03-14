@@ -20,23 +20,31 @@
 <div *ngIf="create">
   <div class="card card-size p-3">
     <div class="h-100 d-flex flex-column align-items-center justify-content-center" *ngIf="!editarTarea">
-      <button type="button" class="btn btn-outline-secondary" (click)="editarTarea = true">Agregar tarea</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="changeMode()">Agregar tarea</button>
     </div>
     <div class="h-100 d-flex flex-column" *ngIf="editarTarea">
       <div class="row justify-content-end">
         <div class="btn-group btn-group-sm col-5" role="group">
-          <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Guardar tarea" (click)="changeState()"><i class="bi bi-check-lg"></i></button>
-          <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cancelar" (click)="editarTarea = false"><i class="bi bi-x-lg"></i></button>
+          <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Guardar tarea" (click)="saveTask()"><i class="bi bi-check-lg"></i></button>
+          <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cancelar" (click)="changeMode()"><i class="bi bi-x-lg"></i></button>
         </div>
       </div>
-      <form>
+      <form [formGroup]="formTask">
         <div class="row mt-4">
-          <input class="col" formControlName="filtro" type="text" class="form-control" placeholder="Titulo">
+          <input formControlName="titulo" class="col" type="text" class="form-control" placeholder="Titulo">
         </div>
         <div class="row flex-grow-1 mt-4">
-          <textarea class="form-control" rows="2" placeholder="Descripción"></textarea>
+          <textarea formControlName="descripcion" class="form-control text-resize" rows="2" placeholder="Descripción" ></textarea>
         </div>
       </form>
     </div>
   </div>
 </div>
+
+
+<app-toast
+  [title]="toastTitle"
+  [message]="toastText"
+  [show]="showToast"
+  [background]="toastBackground"
+></app-toast>
