@@ -1,30 +1,34 @@
 <section class="mt-5 mb-3 mx-5">
   <div class="card py-3">
-    <div class="d-flex justify-content-start align-items-center mx-3">
+    <div class="d-flex justify-content-between align-items-center mx-3">
       <div class="col-6">
         <div class="input-group">
-          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-grid me-1"></i>Galeria</button>
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-grid me-1"></i>{{TITULO_GALERIA}}</button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#"><i class="bi bi-grid me-1"></i>Galeria</a></li>
-            <li><a class="dropdown-item" href="#"><i class="bi bi-layout-split me-1"></i>Tablero</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-grid me-1"></i>{{TITULO_GALERIA}}</a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-layout-split me-1"></i>{{TITULO_TABLERO}}</a></li>
           </ul>
-          <input type="text" class="form-control" placeholder="Buscar tareas">
+          <input type="text" class="form-control" placeholder="Buscar tareas por titulo">
           <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="bi bi-search me-1"></i></button>
         </div>
       </div>
-      <div class="col-1"></div>
-      <div class="col-4 d-flex flex-row justify-content-evenly">
-          <div class="card bg-primary task col-5">
-            <div class="card-body text-white">
+      <div class="col-6 d-flex justify-content-around">
+          <div class="card bg-primary task col-3">
+            <div class="card-body text-white" (click)="getPendingTask()">
               <h5 class="card-title">Tareas pendientes</h5>
-              <p class="card-text">10/10 Tareas</p>
+              <p class="card-text">{{getTotalPendingTask+'/'+listaTareasOriginal.length+' '+TITULO_TAREAS}}</p>
             </div>
           </div>
-          <div class="col-2"></div>
-          <div class="card bg-success task col-5">
+          <div class="card bg-success task col-3" (click)="getCompleteTask()">
             <div class="card-body text-white">
               <h5 class="card-title">Tareas completadas</h5>
-              <p class="card-text">0/10 Tareas</p>
+              <p class="card-text">{{getTotalCompleteTask+'/'+listaTareasOriginal.length+' '+TITULO_TAREAS}}</p>
+            </div>
+          </div>
+          <div class="card .bg-white task col-3" (click)="getAllTask()">
+            <div class="card-body">
+              <h5 class="card-title">Todas las tareas</h5>
+              <p class="card-text">{{listaTareasOriginal.length+' '+TITULO_TAREAS}}</p>
             </div>
           </div>
       </div>
@@ -33,19 +37,9 @@
 </section>
 <section class="mx-5">
   <div class="card p-3">
-    <div class="row">
-      <div class="col-2">
-        <div class="card p-3">
-          <div class="d-flex flex-row justify-content-evenly align-items-center">
-            <h5 class="card-title">Prueba 1</h5>
-            <div class="btn-group btn-group-sm" role="group">
-              <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Completar tarea"><i class="bi bi-check-lg"></i></button>
-              <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Editar tarea"><i class="bi bi-pen"></i></button>
-              <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Eliminar Tarea"><i class="bi bi-trash3"></i></button>
-            </div>
-          </div>
-          <p class="card-text">Velit laborum ad eiusmod eiusmod voluptate voluptate fugiat mollit.</p>
-        </div>
+    <div class="row row-cols-5">
+      <div class="col mb-3" *ngFor="let task of listaTareas">
+        <app-card [titulo]="task.titulo" [descripcion]="task.descripcion" [estado]="task.estado"></app-card>
       </div>
     </div>
   </div>
