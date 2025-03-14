@@ -1,2 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+$background-color: #f3f2f2;
+html,
+body {
+  background-color: $background-color;
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
