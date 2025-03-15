@@ -1,59 +1,40 @@
-# PruebaTecnicaTareas
+# Prueba Tecnica Tareas
+Este proyecto es una aplicación de gestión de tareas construida con Angular y diseñada con el framework bootstrap. Permite crear, editar, eliminar y filtrar tareas.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.3.
+## Requisitos Previos
 
-## Development server
+Antes de comenzar, asegúrate de tener instalado lo siguiente:
 
-To start a local development server, run:
+- [Node.js](https://nodejs.org/) (versión 14 o superior)
+- [Angular CLI](https://angular.io/cli) (versión 12 o superior)
 
-```bash
-ng serve
-```
+## Uso de Bootstrap
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Este proyecto utiliza Bootstrap para el diseño y los estilos. Bootstrap ya está incluido en el proyecto y puedes usar sus clases en tus componentes.
 
-## Code scaffolding
+Para más información sobre cómo usar Bootstrap, consulta la [documentación oficial de Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/).
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Link de despliegue
 
-```bash
-ng generate component component-name
-```
+https://sixman39.github.io/prueba_tecnica_tareas/
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Instalación
 
-```bash
-ng generate --help
-```
+Sigue estos pasos para instalar el proyecto en tu máquina local:
 
-## Building
+1. Clona el repositorio:
 
-To build the project run:
+   ```sh
+   git clone https://github.com/Sixman39/prueba_tecnica_tareas.git
 
-```bash
-ng build
-```
+2. Navega al directorio del proyecto:
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+   ```sh
+   cd prueba_tecnica_tareas
+   ```
 
-## Running unit tests
+3. Instala las dependencias del proyecto:
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+   ```sh
+   npm install
+   ```
