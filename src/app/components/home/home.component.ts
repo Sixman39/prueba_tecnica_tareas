@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit{
       {
         idTarea: 0,
         titulo: 'Prueba 1',
-        descripcion: 'Prueba 2',
+        descripcion: 'Prueba',
         estado: 1
       },
       {
