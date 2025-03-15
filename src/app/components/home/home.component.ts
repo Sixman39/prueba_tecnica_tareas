@@ -95,7 +95,11 @@ export class HomeComponent implements OnInit{
    */
   public filterTask(){
     const controlFilter = this.formFilter.get('filtro');
-    this.listaTareas = this.listaTareasOriginal.filter(task => task.titulo.toLowerCase() == controlFilter?.value.toLowerCase());
+    if (controlFilter?.value == '') {
+      this.listaTareas = this.listaTareasOriginal;
+    } else {
+      this.listaTareas = this.listaTareasOriginal.filter(task => task.titulo.toLowerCase() == controlFilter?.value.toLowerCase());
+    }
     this.stateFilter = 3;
   }
 
